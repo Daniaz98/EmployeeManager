@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EmployeeManager.Infra\EmployeeManager.Infra.csproj" />
     </ItemGroup>
 
 </Project>

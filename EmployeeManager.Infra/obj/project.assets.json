@@ -248,9 +248,6 @@
       "EmployeeManager.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "EmployeeManager.Infra": "1.0.0"
-        },
         "compile": {
           "bin/placeholder/EmployeeManager.Domain.dll": {}
         },
@@ -783,16 +780,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1108",
-      "level": "Error",
-      "message": "Cycle detected. \r\n  EmployeeManager.Infra -> EmployeeManager.Domain -> EmployeeManager.Infra.",
-      "libraryId": "EmployeeManager.Infra",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }

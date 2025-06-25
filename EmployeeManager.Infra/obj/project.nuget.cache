@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "0DjdZ9AOfRA=",
-  "success": false,
+  "dgSpecHash": "Xj4EaPM/qNs=",
+  "success": true,
   "projectFilePath": "C:\\Users\\Daniel\\Dev\\EmployeeManager\\EmployeeManager.Infra\\EmployeeManager.Infra.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Daniel\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
@@ -21,17 +21,5 @@
     "C:\\Users\\Daniel\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1108",
-      "level": "Error",
-      "message": "Cycle detected. \r\n  EmployeeManager.Infra -> EmployeeManager.Domain -> EmployeeManager.Infra.",
-      "projectPath": "C:\\Users\\Daniel\\Dev\\EmployeeManager\\EmployeeManager.Infra\\EmployeeManager.Infra.csproj",
-      "filePath": "C:\\Users\\Daniel\\Dev\\EmployeeManager\\EmployeeManager.Infra\\EmployeeManager.Infra.csproj",
-      "libraryId": "EmployeeManager.Infra",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

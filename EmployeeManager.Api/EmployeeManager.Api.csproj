@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EmployeeManager.Infra\EmployeeManager.Infra.csproj" />
+      <ProjectReference Include="..\EmployeeManager.IoC\EmployeeManager.IoC.csproj" />
     </ItemGroup>
 
 </Project>
