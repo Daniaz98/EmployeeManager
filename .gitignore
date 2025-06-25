@@ -1,0 +1,51 @@
+# Diretórios de build
+bin/
+obj/
+out/
+
+# Diretórios de publicação
+publish/
+dist/
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Configurações de usuário
+*.user
+*.userosscache
+*.suo
+*.csproj.user
+
+# Configurações locais do VSCode
+.vscode/
+
+# Arquivos de cache
+*.cache
+*.db
+
+# Test result files
+TestResults/
+*.trx
+
+# Pacotes NuGet baixados
+*.nupkg
+packages/
+.nuget/
+
+# Arquivos gerados por ferramentas
+Generated_Code/
+
+# Ignora migrations (opcional)
+# Migrations/
+
+# Arquivos sensíveis que contenham segredos (padrão de segurança)
+**/appsettings*.json
+!**/appsettings.Template.json
+!**/appsettings.Development.json
