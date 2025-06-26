@@ -15,4 +15,12 @@
       <ProjectReference Include="..\EmployeeManager.IoC\EmployeeManager.IoC.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="WeatherForecast.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\" />
+    </ItemGroup>
+
 </Project>
