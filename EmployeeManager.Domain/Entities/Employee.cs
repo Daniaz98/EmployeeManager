@@ -24,11 +24,10 @@ public class Employee
         Address = address;
     }
 
-    public void Update(string name, string email, string photoId, string address)
+    public void Update(string name, string email, string address)
     {
         Name = name;
         Email = email;
-        PhotoId = photoId;
         Address = address;
     }
 }

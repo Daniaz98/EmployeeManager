@@ -4,6 +4,7 @@ using EmployeeManager.IoC;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfraModule(builder.Configuration);
+builder.Services.AddApplicationModule(builder.Configuration);
 
 builder.Services.AddControllers();
 

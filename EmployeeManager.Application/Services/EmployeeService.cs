@@ -30,13 +30,20 @@ public class EmployeeService : IEmployeeService
         await _repository.AddAsync(employee);
     }
 
+    public async Task CreateEmployeeAsync(CreateEmployeeDto dto)
+    {
+        var emp = new Employee(dto.Name, dto.Email, dto.Address);
+        
+        await _repository.AddAsync(emp);
+    }
+
     public async Task UpdateEmployeeAsync(string id, UpdateEmployeeDto dto)
     {
         var employee = await _repository.GetEmployeeById(id);
         
         if (id == null) throw new Exception("Funcionário não encontrado");
         
-        employee.Update(dto.Name, dto.Email, dto.PhotoId, dto.Adress);
+        employee.Update(dto.Name, dto.Email,dto.Adress);
 
         await _repository.UpdateAsync(employee);
     }

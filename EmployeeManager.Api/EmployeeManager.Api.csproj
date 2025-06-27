@@ -11,16 +11,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EmployeeManager.Application\EmployeeManager.Application.csproj" />
       <ProjectReference Include="..\EmployeeManager.Infra\EmployeeManager.Infra.csproj" />
       <ProjectReference Include="..\EmployeeManager.IoC\EmployeeManager.IoC.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Compile Remove="WeatherForecast.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controllers\" />
     </ItemGroup>
 
 </Project>
