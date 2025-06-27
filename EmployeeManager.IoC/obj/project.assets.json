@@ -342,6 +342,7 @@
         "dependencies": {
           "EmployeeManager.Domain": "1.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.6",
+          "Microsoft.Extensions.Options": "8.0.0",
           "MongoDB.Driver": "3.4.0"
         },
         "compile": {

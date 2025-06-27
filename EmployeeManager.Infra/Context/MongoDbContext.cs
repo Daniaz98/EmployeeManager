@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using EmployeeManager.Domain.Entities;
+using Microsoft.Extensions.Options;
 
 
 namespace EmployeeManager.Infra.Context;
@@ -9,10 +10,10 @@ public class MongoDbContext
 {
     private readonly IMongoDatabase _database;
     
-    public MongoDbContext(IConfiguration configuration) 
+    public MongoDbContext(IOptions<MongoDbSettings> settings) 
     {
-        var client = new MongoClient(configuration.GetConnectionString("Mongo"));
-        _database = client.GetDatabase("Employee");
+        var client = new MongoClient(settings.Value.ConnectionString);
+        _database = client.GetDatabase(settings.Value.DatabaseName);
     }
 
     public IMongoCollection<Employee> Employees =>

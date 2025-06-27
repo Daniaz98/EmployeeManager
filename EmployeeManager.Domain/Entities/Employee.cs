@@ -23,4 +23,12 @@ public class Employee
         Email = email;
         Address = address;
     }
+
+    public void Update(string name, string email, string photoId, string address)
+    {
+        Name = name;
+        Email = email;
+        PhotoId = photoId;
+        Address = address;
+    }
 }
