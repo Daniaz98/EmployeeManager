@@ -4,8 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using EmployeeManager.Infra.Context;
 using EmployeeManager.Infra.Interfaces;
 using EmployeeManager.Infra.Repositories;
+using EmployeeManager.Infra.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace EmployeeManager.IoC;
 
@@ -16,6 +18,14 @@ public static class ModuleRegistry
         services.Configure<MongoDbSettings>(configuration.GetSection("MongoDbSettings"));
         
         services.AddSingleton<MongoDbContext>();
+
+        services.AddScoped<IMongoDatabase>(sp =>
+        {
+            var context = sp.GetRequiredService<MongoDbContext>();
+            return context.Database;
+        });
+        
+        services.AddScoped<IGridFsService, GridFsService>();
         
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         
