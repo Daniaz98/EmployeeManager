@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
@@ -13,22 +14,22 @@ public class GridFsService : IGridFsService
         _bucket = new GridFSBucket(database);
     }
     
-    public async Task<ObjectId> UploadFileAsync(Stream stream, string fileName, string contentType)
+    public async Task<string> UploadFileAsync(IFormFile file)
     {
+        using var stream = file.OpenReadStream();
         var options = new GridFSUploadOptions
         {
-            Metadata = new BsonDocument { { "contentType", contentType } },
+            Metadata = new BsonDocument{ { "ContentType", file.ContentType } }
         };
         
-        return await _bucket.UploadFromStreamAsync(fileName, stream, options);
+        var fileId = await _bucket.UploadFromStreamAsync(file.FileName, stream, options);
+        return fileId.ToString();
     }
 
-    public async Task<Stream> DownloadFileAsync(ObjectId id)
+    public async Task<Stream> DownloadFileAsync(string id)
     {
-        var stream = new MemoryStream();
-        await _bucket.DownloadToStreamAsync(id, stream);
-        stream.Seek(0, SeekOrigin.Begin);
-        return stream;
+       var objectId = ObjectId.Parse(id);
+       return await _bucket.OpenDownloadStreamAsync(objectId);
     }
 
     public async Task DeleteFileAsync(ObjectId id)

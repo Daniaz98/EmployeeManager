@@ -36,6 +36,8 @@ public static class ModuleRegistry
         IConfiguration configuration)
     {
         services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<GridFsService>();
+        
         return services;
     }
 }

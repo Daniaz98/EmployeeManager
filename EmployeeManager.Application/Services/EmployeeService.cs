@@ -3,16 +3,20 @@ using EmployeeManager.Application.Interfaces;
 using EmployeeManager.Domain.Entities;
 using EmployeeManager.Infra.Interfaces;
 using EmployeeManager.Infra.Repositories;
+using EmployeeManager.Infra.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace EmployeeManager.Application.Services;
 
 public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _repository;
+    private readonly GridFsService _gridFsService;
 
-    public EmployeeService(IEmployeeRepository repository)
+    public EmployeeService(IEmployeeRepository repository, GridFsService gridFsService)
     {
         _repository = repository;
+        _gridFsService = gridFsService;
     }
     
     public async Task<IEnumerable<Employee>> GetEmployeesAsync()
@@ -32,7 +36,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task CreateEmployeeAsync(CreateEmployeeDto dto)
     {
-        var emp = new Employee(dto.Name, dto.Email, dto.Address);
+        var emp = new Employee(dto.Name, dto.Email, dto.Address, dto.PhotoId);
         
         await _repository.AddAsync(emp);
     }
@@ -43,8 +47,20 @@ public class EmployeeService : IEmployeeService
         
         if (id == null) throw new Exception("Funcionário não encontrado");
         
-        employee.Update(dto.Name, dto.Email,dto.Adress);
+        employee.Update(dto.Name, dto.Email,dto.Adress, dto.PhotoId);
 
+        await _repository.UpdateAsync(employee);
+    }
+
+    public async Task UploadEmployeePhotoAsync(string employeeId, IFormFile file)
+    {
+        var photoId = await _gridFsService.UploadFileAsync(file);
+        
+        var employee = await _repository.GetEmployeeById(employeeId);
+        if (employee == null) throw new Exception("Funcionário não encontrado.");
+        
+        employee.SetPhotoId(photoId);
+        
         await _repository.UpdateAsync(employee);
     }
 

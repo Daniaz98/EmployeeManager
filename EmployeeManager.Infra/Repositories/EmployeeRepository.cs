@@ -19,7 +19,7 @@ public class EmployeeRepository : IEmployeeRepository
         return await _collection.Find(_ => true).ToListAsync(); 
     }
 
-    public async Task<Employee> GetEmployeeById(string id)
+    public async Task<Employee> GetEmployeeById(string? id)
     {
         return await _collection.Find(d => d.Id == id).FirstOrDefaultAsync();
     }

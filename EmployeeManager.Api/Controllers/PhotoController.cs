@@ -1,5 +1,8 @@
+using EmployeeManager.Application.Interfaces;
+using EmployeeManager.Infra.DTO;
 using EmployeeManager.Infra.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace EmployeeManager.Api.Controllers;
 
@@ -8,25 +11,30 @@ namespace EmployeeManager.Api.Controllers;
 public class PhotoController : ControllerBase
 {
     private readonly IGridFsService _service;
+    private readonly IEmployeeService _employeeService;
 
-    public PhotoController(IGridFsService service)
+    public PhotoController(IGridFsService service, IEmployeeService employeeService)
     {
         _service = service;
+        _employeeService = employeeService;
     }
 
-    [HttpPost("upload-photo")]
-    public async Task<IActionResult> UploadPhoto([FromForm] IFormFile file)
+    [HttpPost("upload")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UploadPhoto([FromForm] UploadPhotoDto dto)
     {
-        if (file == null || file.Length == 0) throw new Exception("Arquivo inválido!");
-
-        using var stream = file.OpenReadStream();
-        var id = await _service.UploadFileAsync(stream, file.FileName, file.ContentType);
-        return Ok(new { fotoId = id.ToString() });
+        await _employeeService.UploadEmployeePhotoAsync(dto.EmployeeId, dto.File);
+        return Ok("Foto salva e vinculada ao funcionário.");
     }
 
     // [HttpGet("photo/{id}")]
-    // public async Task<IActionResult> GetPhoto(string id)
+    // public async Task<IActionResult> DownloadPhoto(ObjectId id)
     // {
-    //     if (!Object)
+    //     //if (ObjectId == null) return NotFound();
+    //     
+    //     await using var stream = new MemoryStream();
+    //     var file = await _service.DownloadFileAsync(id);
+    //     stream.Position = 0;
+    //     return File(stream, "image/jpeg");
     // }
 }
