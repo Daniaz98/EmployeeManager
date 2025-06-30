@@ -12,5 +12,6 @@ public interface IEmployeeService
     Task CreateEmployeeAsync(CreateEmployeeDto employee);
     Task UpdateEmployeeAsync(string id, UpdateEmployeeDto employee);
     Task UploadEmployeePhotoAsync(string employeeId, IFormFile file);
+    Task<Stream> DownloadPhotoAsync(string employeeId);
     Task DeleteEmployeeAsync(string? id);
 }

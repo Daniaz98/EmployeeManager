@@ -64,6 +64,14 @@ public class EmployeeService : IEmployeeService
         await _repository.UpdateAsync(employee);
     }
 
+    public async Task<Stream?> DownloadPhotoAsync(string employeeId)
+    {
+        var employee = await _repository.GetEmployeeById(employeeId);
+        if (employee == null || string.IsNullOrEmpty(employee.PhotoId)) return null;
+        
+        return await _gridFsService.DownloadFileAsync(employee.PhotoId);
+    }
+
     public async Task DeleteEmployeeAsync(string? id)
     {
         await _repository.DeleteAsync(id);

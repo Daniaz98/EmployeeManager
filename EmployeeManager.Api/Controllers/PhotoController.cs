@@ -7,7 +7,7 @@ using MongoDB.Bson;
 namespace EmployeeManager.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/photo")]
 public class PhotoController : ControllerBase
 {
     private readonly IGridFsService _service;
@@ -27,14 +27,13 @@ public class PhotoController : ControllerBase
         return Ok("Foto salva e vinculada ao funcionário.");
     }
 
-    // [HttpGet("photo/{id}")]
-    // public async Task<IActionResult> DownloadPhoto(ObjectId id)
-    // {
-    //     //if (ObjectId == null) return NotFound();
-    //     
-    //     await using var stream = new MemoryStream();
-    //     var file = await _service.DownloadFileAsync(id);
-    //     stream.Position = 0;
-    //     return File(stream, "image/jpeg");
-    // }
+    [HttpGet("download/{id}")]
+    public async Task<IActionResult> DownloadPhoto(string id)
+    {
+        var stream = await _employeeService.DownloadPhotoAsync(id);
+        
+        if (stream == null) return NotFound("Arquivo não encontrado");
+        
+        return File(stream, "image/jpeg");
+    }
 }

@@ -26,9 +26,9 @@ public class GridFsService : IGridFsService
         return fileId.ToString();
     }
 
-    public async Task<Stream> DownloadFileAsync(string id)
+    public async Task<Stream> DownloadFileAsync(string photoId)
     {
-       var objectId = ObjectId.Parse(id);
+       var objectId = ObjectId.Parse(photoId);
        return await _bucket.OpenDownloadStreamAsync(objectId);
     }
 
