@@ -9,12 +9,9 @@
     <ItemGroup>
       <ProjectReference Include="..\EmployeeManager.Domain\EmployeeManager.Domain.csproj" />
       <ProjectReference Include="..\EmployeeManager.Infra\EmployeeManager.Infra.csproj" />
+      <PackageReference Include="MailKit" Version="4.13.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore.Http.Features">
-        <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.17\Microsoft.AspNetCore.Http.Features.dll</HintPath>
-      </Reference>
-    </ItemGroup>
+    
 
 </Project>
