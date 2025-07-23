@@ -7,6 +7,7 @@ using EmployeeManager.Domain.Entities;
 using EmployeeManager.Infra.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Crypto.Generators;
 
 namespace EmployeeManager.Application.Services;
 
@@ -15,14 +16,15 @@ public class AuthService :  IAuthService
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
 
-    public AuthService(IUserRepository userRepository)
+    public AuthService(IUserRepository userRepository, IConfiguration configuration)
     {
         _userRepository = userRepository;
+        _configuration = configuration;
     }
     
     public async Task<AuthResultDto> LoginAsync(LoginDto loginDto)
     {
-        var user = await _userRepository.GetUserById(loginDto.Id);
+        var user = await _userRepository.GetByEmailAsync(loginDto.Email);
         if (user == null)
             return null;
         

@@ -4,6 +4,6 @@ namespace EmployeeManager.Infra.Interfaces;
 
 public interface IUserRepository
 {
-    Task<User?> GetUserById(string id);
+    Task<User?> GetByEmailAsync(string email);
     Task AddUserAsync(User user);
 }
