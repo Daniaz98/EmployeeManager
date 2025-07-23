@@ -18,4 +18,6 @@ public class MongoDbContext
 
     public IMongoCollection<Employee> Employees =>
         _database.GetCollection<Employee>("employee");
+    
+    public IMongoDatabase Database => _database;
 }

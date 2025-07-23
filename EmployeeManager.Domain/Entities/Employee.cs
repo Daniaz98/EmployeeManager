@@ -17,17 +17,24 @@ public class Employee
 
     public Employee() { }
 
-    public Employee(string name, string email,string address)
+    public Employee(string name, string email,string address,  string photoId)
     {
         Name = name;
         Email = email;
         Address = address;
+        PhotoId = photoId;
     }
 
-    public void Update(string name, string email, string address)
+    public void Update(string name, string email, string address, string photoId)
     {
         Name = name;
         Email = email;
         Address = address;
+        PhotoId = photoId;
+    }
+
+    public void SetPhotoId(string photoId)
+    {
+        PhotoId = photoId;
     }
 }
