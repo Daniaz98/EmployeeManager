@@ -35,7 +35,9 @@ public static class ModuleRegistry
     public static IServiceCollection AddApplicationModule(this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<GridFsService>();
         
         return services;
