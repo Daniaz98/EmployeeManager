@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DOdnz5vwG5U=",
+  "dgSpecHash": "YihmQC3yzPs=",
   "success": true,
   "projectFilePath": "C:\\Users\\Daniel\\Dev\\EmployeeManager\\EmployeeManager.IoC\\EmployeeManager.IoC.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Daniel\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\mailkit\\4.13.0\\mailkit.4.13.0.nupkg.sha512",
+    "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.18\\microsoft.aspnetcore.authentication.jwtbearer.8.0.18.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.6\\microsoft.extensions.configuration.abstractions.9.0.6.nupkg.sha512",
@@ -20,6 +21,8 @@
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.13.0\\microsoft.identitymodel.abstractions.8.13.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.13.0\\microsoft.identitymodel.jsonwebtokens.8.13.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.identitymodel.logging\\8.13.0\\microsoft.identitymodel.logging.8.13.0.nupkg.sha512",
+    "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.identitymodel.protocols\\7.1.2\\microsoft.identitymodel.protocols.7.1.2.nupkg.sha512",
+    "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.1.2\\microsoft.identitymodel.protocols.openidconnect.7.1.2.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.13.0\\microsoft.identitymodel.tokens.8.13.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",

@@ -37,7 +37,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task CreateEmployeeAsync(CreateEmployeeDto dto)
     {
-        var emp = new Employee(dto.Name, dto.Email, dto.Address, dto.PhotoId);
+        var emp = new Employee(dto.Name, dto.Email, dto.Address);
         
         await _repository.AddAsync(emp);
     }

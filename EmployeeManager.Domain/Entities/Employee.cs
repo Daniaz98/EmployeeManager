@@ -17,12 +17,11 @@ public class Employee
 
     public Employee() { }
 
-    public Employee(string name, string email,string address,  string photoId)
+    public Employee(string name, string email,string address)
     {
         Name = name;
         Email = email;
         Address = address;
-        PhotoId = photoId;
     }
 
     public void Update(string name, string email, string address, string photoId)

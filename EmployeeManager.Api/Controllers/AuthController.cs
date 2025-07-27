@@ -22,7 +22,19 @@ public class AuthController : ControllerBase
         if (result == null)
             return Unauthorized("Credenciais inválidas!");
         
-        return Ok(result);
+        Response.Cookies.Append("token", result.Token, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTimeOffset.UtcNow.AddHours(6)
+        });
+        
+        return Ok(new
+        {
+            token = result.Token,
+            role = result.Role
+        });
     }
 
     [HttpPost("register")]

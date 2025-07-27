@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[4.13.0, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.18, )"
+            },
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -201,6 +205,10 @@
             "MailKit": {
               "target": "Package",
               "version": "[4.13.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.18, )"
             },
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
