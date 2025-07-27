@@ -5,4 +5,5 @@ namespace EmployeeManager.Application.Interfaces;
 public interface IAuthService
 {
     Task<AuthResultDto> LoginAsync(LoginDto loginDto);
+    Task<bool> RegisterAsync(RegisterDto registerDto);
 }

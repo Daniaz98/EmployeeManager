@@ -7,20 +7,20 @@ namespace EmployeeManager.Infra.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly IMongoCollection<User> _accounts;
+    private readonly IMongoCollection<User> _collection;
 
     public UserRepository(MongoDbContext context)
     {
-        _accounts = context.Database.GetCollection<User>("Users");
+        _collection = context.Users;
     }
     
     public async Task<User?> GetByEmailAsync(string email)
     {
-        return await  _accounts.Find(u => u.Email == email).FirstOrDefaultAsync();
+        return await  _collection.Find(u => u.Email == email).FirstOrDefaultAsync();
     }
 
     public async Task AddUserAsync(User user)
     {
-        await _accounts.InsertOneAsync(user);
+        await _collection.InsertOneAsync(user);
     }
 }

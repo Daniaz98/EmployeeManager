@@ -38,6 +38,26 @@ public class AuthService :  IAuthService
         };
     }
 
+    public async Task<bool> RegisterAsync(RegisterDto registerDto)
+    {
+        var existingUser = await _userRepository.GetByEmailAsync(registerDto.Email);
+        if (existingUser != null) return false;
+        
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+        
+        var user = new User
+        {
+            Email = registerDto.Email,
+            Password = hashedPassword,
+            Role = Enum.TryParse<UserRole>(registerDto.Role, true, out var role)
+                ? role
+                : UserRole.funcionario
+        };
+
+        await _userRepository.AddUserAsync(user);
+        return true;
+    }
+
     private string GenerateJwtToken(User user)
     {
         var claims = new[]

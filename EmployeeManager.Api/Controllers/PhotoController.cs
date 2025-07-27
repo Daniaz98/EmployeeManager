@@ -7,7 +7,7 @@ using MongoDB.Bson;
 namespace EmployeeManager.Api.Controllers;
 
 [ApiController]
-[Route("api/photo")]
+[Route("photo")]
 public class PhotoController : ControllerBase
 {
     private readonly IGridFsService _service;
