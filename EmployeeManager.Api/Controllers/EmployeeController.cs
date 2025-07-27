@@ -1,6 +1,7 @@
 using EmployeeManager.Application.DTO;
 using EmployeeManager.Application.Interfaces;
 using EmployeeManager.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManager.Api.Controllers;
@@ -31,6 +32,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
+    //[Authorize(Roles = "supervisor")]
     public async Task<ActionResult> Create([FromBody] CreateEmployeeDto dto)
     {
         await _service.CreateEmployeeAsync(dto);
@@ -38,6 +40,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    //[Authorize(Roles = "supervisor")]
     public async Task<IActionResult> Update(string id, [FromBody] UpdateEmployeeDto dto)
     {
         await _service.UpdateEmployeeAsync(id, dto);
@@ -45,6 +48,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    //[Authorize(Roles = "supervisor")]
     public async Task<IActionResult> Delete(string? id)
     {
         await _service.DeleteEmployeeAsync(id);

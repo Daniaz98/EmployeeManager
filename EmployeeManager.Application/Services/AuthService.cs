@@ -15,17 +15,19 @@ public class AuthService :  IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
+    private readonly IEmployeeRepository _employeeRepository;
 
-    public AuthService(IUserRepository userRepository, IConfiguration configuration)
+    public AuthService(IUserRepository userRepository, IConfiguration configuration,  IEmployeeRepository employeeRepository)
     {
         _userRepository = userRepository;
         _configuration = configuration;
+        _employeeRepository = employeeRepository;
     }
     
     public async Task<AuthResultDto> LoginAsync(LoginDto loginDto)
     {
         var user = await _userRepository.GetByEmailAsync(loginDto.Email);
-        if (user == null)
+        if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
             return null;
         
         var token = GenerateJwtToken(user);
@@ -40,8 +42,9 @@ public class AuthService :  IAuthService
 
     public async Task<bool> RegisterAsync(RegisterDto registerDto)
     {
-        var existingUser = await _userRepository.GetByEmailAsync(registerDto.Email);
-        if (existingUser != null) return false;
+        var existingUser = await _employeeRepository.GetEmployeeById(registerDto.EmployeeId);
+        if (existingUser == null) 
+            throw new Exception("User not found");
         
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
         
@@ -49,12 +52,12 @@ public class AuthService :  IAuthService
         {
             Email = registerDto.Email,
             Password = hashedPassword,
-            Role = Enum.TryParse<UserRole>(registerDto.Role, true, out var role)
-                ? role
-                : UserRole.funcionario
+            Role = registerDto.Role,
+            EmployeeId = registerDto.EmployeeId
         };
 
         await _userRepository.AddUserAsync(user);
+        Console.WriteLine($"User {user.Email} created");
         return true;
     }
 
