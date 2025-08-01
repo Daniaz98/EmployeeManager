@@ -53,7 +53,7 @@ public class AuthService :  IAuthService
             Email = registerDto.Email,
             Password = hashedPassword,
             Role = registerDto.Role,
-            EmployeeId = registerDto.EmployeeId
+            //EmployeeId = registerDto.EmployeeId
         };
 
         await _userRepository.AddUserAsync(user);
