@@ -42,9 +42,19 @@ public class AuthService :  IAuthService
 
     public async Task<bool> RegisterAsync(RegisterDto registerDto)
     {
-        var existingUser = await _employeeRepository.GetEmployeeById(registerDto.EmployeeId);
-        if (existingUser == null) 
-            throw new Exception("User not found");
+        if (registerDto.Role == UserRole.funcionario)
+        {
+            if (string.IsNullOrEmpty(registerDto.EmployeeId))
+                throw new Exception("Employee ID é obrigatório para funcionários.");
+            
+            var existingEmployee = await _employeeRepository.GetEmployeeById(registerDto.EmployeeId);
+            if (existingEmployee == null)
+                throw new Exception("Funcionário não encontrado.");
+        }
+        else
+        {
+            registerDto.EmployeeId = null;
+        }
         
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
         
@@ -53,7 +63,7 @@ public class AuthService :  IAuthService
             Email = registerDto.Email,
             Password = hashedPassword,
             Role = registerDto.Role,
-            //EmployeeId = registerDto.EmployeeId
+            EmployeeId = registerDto.EmployeeId
         };
 
         await _userRepository.AddUserAsync(user);
