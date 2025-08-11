@@ -54,12 +54,16 @@ public class EmployeeService : IEmployeeService
         
         if (employee == null) throw new Exception("Funcionário não encontrado");
         
-        employee.Update(dto.Name, dto.Email,dto.Adress);
+        employee.Update(dto.Name, dto.Email,dto.Address);
         
         if (dto.PhotoId != null && dto.PhotoId.Length > 0)
         {
             var photoId = await _gridFsService.UploadFileAsync(dto.PhotoId);
             employee.SetPhotoId(photoId);
+        }
+        else if (dto.RemovePhoto == true)
+        {
+            employee.SetPhotoId(null);
         }
 
         await _repository.UpdateAsync(employee);

@@ -13,6 +13,24 @@ public class Employee
     [BsonRepresentation(BsonType.ObjectId)]
     public string? PhotoId { get; private set; }
     public string Address { get; private set; }  = null!;
+    public string PhoneNumber { get; private set; } = null!;
+    public string Department { get; private set; } = null!;
+    public string Position { get; private set; } = null!;
+    public decimal Wage { get; private set; }
+    public DateTime DateOfBirth { get; private set; }
+    public string CPF { get; set; } = null!;
+    public DateTime HireDate { get; private set; }
+    public DateTime? TerminationDate { get; private set; }
+    public string EmploymentType { get; private set; } = null!;
+    public bool IsActive { get; private set; }
+    
+    public string BankName { get; private set; } = null!;
+    public string BankAccountNumber { get; private set; } = null!;
+    
+    public string EmergencyContactName { get; private set; } = null!;
+    public string EmergencyContactPhone { get; private set; } = null!;
+    
+    public List<string> DocumentsIds { get; private set; } = new List<string>();
 
     public Employee() { }
 
