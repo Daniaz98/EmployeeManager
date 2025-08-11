@@ -10,7 +10,6 @@ public class Employee
     public string? Id { get; set; }
     public string Name { get; private set; } = null!;
     public string Email { get; private set; }  = null!;
-    
     [BsonRepresentation(BsonType.ObjectId)]
     public string? PhotoId { get; private set; }
     public string Address { get; private set; }  = null!;
@@ -24,12 +23,11 @@ public class Employee
         Address = address;
     }
 
-    public void Update(string name, string email, string address, string photoId)
+    public void Update(string name, string email, string address)
     {
         Name = name;
         Email = email;
         Address = address;
-        PhotoId = photoId;
     }
 
     public void SetPhotoId(string photoId)

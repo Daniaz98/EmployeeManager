@@ -39,6 +39,12 @@ public class EmployeeService : IEmployeeService
     {
         var emp = new Employee(dto.Name, dto.Email, dto.Address);
         
+        if (dto.PhotoId != null && dto.PhotoId.Length > 0)
+        {
+            var photoId = await _gridFsService.UploadFileAsync(dto.PhotoId);
+            emp.SetPhotoId(photoId);
+        }
+        
         await _repository.AddAsync(emp);
     }
 
@@ -46,9 +52,15 @@ public class EmployeeService : IEmployeeService
     {
         var employee = await _repository.GetEmployeeById(id);
         
-        if (id == null) throw new Exception("Funcionário não encontrado");
+        if (employee == null) throw new Exception("Funcionário não encontrado");
         
-        employee.Update(dto.Name, dto.Email,dto.Adress, dto.PhotoId);
+        employee.Update(dto.Name, dto.Email,dto.Adress);
+        
+        if (dto.PhotoId != null && dto.PhotoId.Length > 0)
+        {
+            var photoId = await _gridFsService.UploadFileAsync(dto.PhotoId);
+            employee.SetPhotoId(photoId);
+        }
 
         await _repository.UpdateAsync(employee);
     }
