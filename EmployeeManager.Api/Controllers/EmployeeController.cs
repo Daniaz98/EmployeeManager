@@ -33,7 +33,7 @@ public class EmployeeController : ControllerBase
 
     [HttpPost]
     //[Authorize(Roles = "supervisor")]
-    public async Task<ActionResult> Create([FromBody] CreateEmployeeDto dto)
+    public async Task<ActionResult> Create([FromForm] CreateEmployeeDto dto)
     {
         await _service.CreateEmployeeAsync(dto);
         return Ok(dto);
@@ -41,7 +41,7 @@ public class EmployeeController : ControllerBase
 
     [HttpPut("{id}")]
     //[Authorize(Roles = "supervisor")]
-    public async Task<IActionResult> Update(string id, [FromBody] UpdateEmployeeDto dto)
+    public async Task<IActionResult> Update(string id, [FromForm] UpdateEmployeeDto dto)
     {
         await _service.UpdateEmployeeAsync(id, dto);
         return Ok(dto);
