@@ -33,7 +33,6 @@ public class AuthController : ControllerBase
         return Ok(new
         {
             token = result.Token,
-            role = result.Role
         });
     }
 

@@ -9,4 +9,5 @@ public class UpdateEmployeeDto
     public string Address { get; set; }
     public IFormFile? PhotoId { get; set; }
     public bool RemovePhoto { get; set; } = false;
+    public string Department { get; set; }
 }
