@@ -12,12 +12,14 @@ namespace EmployeeManager.Application.Services;
 public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _repository;
-    private readonly GridFsService _gridFsService;
+    private readonly IGridFsService _gridFsService;
+    private readonly IDepartmentRepository _departmentRepository;
 
-    public EmployeeService(IEmployeeRepository repository, GridFsService gridFsService)
+    public EmployeeService(IEmployeeRepository repository, IGridFsService gridFsService,  IDepartmentRepository departmentRepository)
     {
         _repository = repository;
         _gridFsService = gridFsService;
+        _departmentRepository = departmentRepository;
     }
     
     public async Task<IEnumerable<Employee>> GetEmployeesAsync()
@@ -92,5 +94,10 @@ public class EmployeeService : IEmployeeService
     public async Task DeleteEmployeeAsync(string? id)
     {
         await _repository.DeleteAsync(id);
+    }
+
+    public async Task<List<DepartmentDto>> GetDepartmentsAsync()
+    {
+        return await _departmentRepository.GetDepartment();
     }
 }

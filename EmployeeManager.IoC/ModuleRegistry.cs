@@ -1,5 +1,6 @@
 using EmployeeManager.Application.Interfaces;
 using EmployeeManager.Application.Services;
+using EmployeeManager.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using EmployeeManager.Infra.Context;
 using EmployeeManager.Infra.Interfaces;
@@ -25,8 +26,15 @@ public static class ModuleRegistry
             return context.Database;
         });
         
-        services.AddScoped<IGridFsService, GridFsService>();
+        services.AddScoped<IMongoCollection<Employee>>(sp =>
+        {
+            var database = sp.GetRequiredService<IMongoDatabase>();
+            return database.GetCollection<Employee>("employee"); 
+        });
         
+        services.AddScoped<IGridFsService, GridFsService>();
+        services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         
         return services;
@@ -35,11 +43,9 @@ public static class ModuleRegistry
     public static IServiceCollection AddApplicationModule(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<GridFsService>();
         
         return services;
     }

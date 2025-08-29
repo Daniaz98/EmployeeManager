@@ -15,10 +15,9 @@ public class Employee
     [EmailAddress]
     public string Email { get; private set; }  = null!;
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? PhotoId { get; private set; }
-    public string Address { get; private set; }  = null!;
-    public string Department { get; private set; } = null!;
-    public List<ObjectId> DocumentIds { get; private set; } = new List<ObjectId>();
+    public string? PhotoId { get; set; }
+    public string Address { get; set; }  = null!;
+    public string Department { get; set; } = null!;
 
     public Employee() { }
 

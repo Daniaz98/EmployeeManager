@@ -1,6 +1,8 @@
+using EmployeeManager.Application.DTO;
 using EmployeeManager.Domain.Entities;
 using EmployeeManager.Infra.Context;
 using EmployeeManager.Infra.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace EmployeeManager.Infra.Repositories;
