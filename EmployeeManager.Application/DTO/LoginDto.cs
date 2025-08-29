@@ -1,9 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 using EmployeeManager.Domain.Entities;
 
 namespace EmployeeManager.Application.DTO;
 
 public class LoginDto
 {
-    public string Email { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Username é obrigatório")]
+    [EmailAddress]
+    public string Username { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Password é obrigatório")]
     public string Password  { get; set; } = string.Empty;
 }

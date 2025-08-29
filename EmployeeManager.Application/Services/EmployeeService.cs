@@ -37,7 +37,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task CreateEmployeeAsync(CreateEmployeeDto dto)
     {
-        var emp = new Employee(dto.Name, dto.Email, dto.Address);
+        var emp = new Employee(dto.Name, dto.Email, dto.Address, dto.Department);
         
         if (dto.PhotoId != null && dto.PhotoId.Length > 0)
         {
@@ -54,7 +54,7 @@ public class EmployeeService : IEmployeeService
         
         if (employee == null) throw new Exception("Funcionário não encontrado");
         
-        employee.Update(dto.Name, dto.Email,dto.Address);
+        employee.Update(dto.Name, dto.Email,dto.Address, dto.Department);
         
         if (dto.PhotoId != null && dto.PhotoId.Length > 0)
         {
