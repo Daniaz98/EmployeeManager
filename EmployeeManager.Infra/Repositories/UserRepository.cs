@@ -7,20 +7,46 @@ namespace EmployeeManager.Infra.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly IMongoCollection<User> _collection;
+    private readonly IMongoCollection<User> _users;
 
     public UserRepository(MongoDbContext context)
     {
-        _collection = context.Users;
+        _users = context.Users;
     }
     
-    public async Task<User?> GetByEmailAsync(string email)
+    public async Task<User?> GetByIdAsync(string id)
     {
-        return await  _collection.Find(u => u.Email == email).FirstOrDefaultAsync();
+        return await _users.Find(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task AddUserAsync(User user)
+    public async Task<User?> GetByUsernameAsync(string username)
     {
-        await _collection.InsertOneAsync(user);
+        return await _users.Find(x => x.Username == username).FirstOrDefaultAsync();
+    }
+
+    public async Task<User?> GetByEmailAsync(string email)
+    {
+        return await _users.Find(x => x.Email == email).FirstOrDefaultAsync();
+    }
+
+    public async Task<User> CreateAsync(User user)
+    {
+        await _users.InsertOneAsync(user);
+        return user;
+    }
+
+    public async Task UpdateAsync(User user)
+    {
+        await _users.ReplaceOneAsync(x => x.Id == user.Id, user);
+    }
+
+    public async Task DeleteAsync(string id)
+    {
+        await _users.DeleteOneAsync(x => x.Id == id);
+    }
+
+    public async Task<IEnumerable<User>> GetAllAsync()
+    {
+        return await _users.Find(_ => true).ToListAsync();
     }
 }

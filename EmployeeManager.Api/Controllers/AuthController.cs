@@ -18,32 +18,29 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var result =  await _authService.LoginAsync(loginDto);
+        
         if (result == null)
-            return Unauthorized("Credenciais inválidas!");
+            return Unauthorized(new { message = "Credenciais inválidas" });
         
-        Response.Cookies.Append("token", result.Token, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict,
-            Expires = DateTimeOffset.UtcNow.AddHours(6)
-        });
-        
-        return Ok(new
-        {
-            token = result.Token,
-        });
+        return Ok(result);
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterDto registerDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var result = await _authService.RegisterAsync(registerDto);
+        
         if (result == null)
             return BadRequest("Usuário já existe!");
         
-        return Ok("Usuário registrado com sucesso!");
+        return Ok(result);
     }
     
 }

@@ -15,66 +15,84 @@ public class AuthService :  IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
+    private readonly ITokenService _tokenService;
     private readonly IEmployeeRepository _employeeRepository;
 
-    public AuthService(IUserRepository userRepository, IConfiguration configuration,  IEmployeeRepository employeeRepository)
+    public AuthService(IUserRepository userRepository, IConfiguration configuration,  IEmployeeRepository employeeRepository,  ITokenService tokenService)
     {
         _userRepository = userRepository;
         _configuration = configuration;
         _employeeRepository = employeeRepository;
+        _tokenService = tokenService;
     }
     
-    public async Task<AuthResultDto> LoginAsync(LoginDto loginDto)
+    public async Task<TokenResponseDto> LoginAsync(LoginDto loginDto)
     {
-        var user = await _userRepository.GetByEmailAsync(loginDto.Email);
-        if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
+        var user = await _userRepository.GetByUsernameAsync(loginDto.Username);
+        if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
+        {
             return null;
+        }
         
-        var token = GenerateJwtToken(user);
+        user.LastLogin = DateTime.UtcNow;
+        await _userRepository.UpdateAsync(user);
 
-        return new AuthResultDto
+        var token = _tokenService.GenerateToken(user);
+
+        return new TokenResponseDto
         {
             Token = token,
+            ExpiresAt = _tokenService.GetTokenExpiration(),
+            Username = user.Username,
+            Role = user.Role
         };
     }
 
-    public async Task<bool> RegisterAsync(RegisterDto registerDto)
+    public async Task<TokenResponseDto?> RegisterAsync(RegisterDto registerDto)
     {
+        var existingUser = await _userRepository.GetByUsernameAsync(registerDto.Username);
+        if (existingUser != null)
+            return null;
         
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+        var existingEmail = await _userRepository.GetByEmailAsync(registerDto.Email);
+        if (existingEmail != null)
+            return null;
         
         var user = new User
         {
+            Username = registerDto.Username,
             Email = registerDto.Email,
-            Password = hashedPassword,
+            PasswordHash = HashPassword(registerDto.Password),
             Role = registerDto.Role,
+            CreatedAt = DateTime.UtcNow,
         };
+        
+        await _userRepository.CreateAsync(user);
 
-        await _userRepository.AddUserAsync(user);
-        Console.WriteLine($"User {user.Email} created");
-        return true;
+        var token = _tokenService.GenerateToken(user);
+
+        return new TokenResponseDto
+        {
+            Token = token,
+            ExpiresAt = _tokenService.GetTokenExpiration(),
+            Username = user.Username,
+            Role = user.Role
+        };
     }
 
-    private string GenerateJwtToken(User user)
+    public async Task<bool> ValidateUserAsync(string username)
     {
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role.ToString())
-        };
-        
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var user = await _userRepository.GetByUsernameAsync(username);
+        return user != null;
+    }
 
-        var token = new JwtSecurityToken(
-                issuer:  _configuration["Jwt:Issuer"],
-                audience:  _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(6),
-                signingCredentials: creds
-            );
-        
-        return new JwtSecurityTokenHandler().WriteToken(token);
+    private static string HashPassword(string password)
+    {
+        return BCrypt.Net.BCrypt.HashPassword(password);
+    }
+
+    private static bool VerifyPassword(string password, string hash)
+    {
+        return BCrypt.Net.BCrypt.Verify(password, hash);
     }
 }

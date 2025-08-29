@@ -37,6 +37,7 @@ public static class ModuleRegistry
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<GridFsService>();
         
