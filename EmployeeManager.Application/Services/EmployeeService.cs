@@ -1,6 +1,10 @@
+using System.Diagnostics;
+using AutoMapper;
 using EmployeeManager.Application.DTO;
 using EmployeeManager.Application.Interfaces;
 using EmployeeManager.Domain.Entities;
+using EmployeeManager.Domain.Specifications;
+using EmployeeManager.Domain.ValueObjects;
 using EmployeeManager.Infra.Interfaces;
 using EmployeeManager.Infra.Repositories;
 using EmployeeManager.Infra.Services;
@@ -14,12 +18,14 @@ public class EmployeeService : IEmployeeService
     private readonly IEmployeeRepository _repository;
     private readonly IGridFsService _gridFsService;
     private readonly IDepartmentRepository _departmentRepository;
+    private readonly IMapper _mapper;
 
-    public EmployeeService(IEmployeeRepository repository, IGridFsService gridFsService,  IDepartmentRepository departmentRepository)
+    public EmployeeService(IEmployeeRepository repository, IGridFsService gridFsService,  IDepartmentRepository departmentRepository, IMapper mapper)
     {
         _repository = repository;
         _gridFsService = gridFsService;
         _departmentRepository = departmentRepository;
+        _mapper = mapper;
     }
     
     public async Task<IEnumerable<Employee>> GetEmployeesAsync()
@@ -99,5 +105,34 @@ public class EmployeeService : IEmployeeService
     public async Task<List<DepartmentDto>> GetDepartmentsAsync()
     {
         return await _departmentRepository.GetDepartment();
+    }
+
+    public async Task<EmployeeSearchResultDto> SearchEmployeesAsync(SearchEmployeesDto searchDto, CancellationToken cancellationToken = default)
+    {
+        if (searchDto == null)
+            throw new ArgumentNullException(nameof(searchDto));
+        
+        var stopwatch = Stopwatch.StartNew();
+
+        var searchCriteria = new SearchCriteria(
+                searchTerm: searchDto.SearchTerm,
+                page: searchDto.Page,
+                pageSize: searchDto.PageSize
+            );
+        
+        var specification = new EmployeeSearchSpecification(searchDto.SearchTerm);
+
+        var searchResult = await _repository.SearchAsync(specification, searchCriteria, cancellationToken);
+        
+        stopwatch.Stop();
+        
+        return new EmployeeSearchResultDto
+        {
+            Items = _mapper.Map<IReadOnlyList<EmployeeDto>>(searchResult.Items),
+            TotalCount = searchResult.TotalCount,
+            Page = searchResult.Page,
+            PageSize = searchResult.PageSize,
+            TotalPages = searchResult.TotalPages,
+        };
     }
 }

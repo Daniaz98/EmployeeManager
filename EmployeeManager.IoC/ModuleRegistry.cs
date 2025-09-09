@@ -8,6 +8,7 @@ using EmployeeManager.Infra.Repositories;
 using EmployeeManager.Infra.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using EmployeeManager.Application.Mappings;
 using MongoDB.Driver;
 
 namespace EmployeeManager.IoC;
@@ -46,6 +47,7 @@ public static class ModuleRegistry
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddAutoMapper(cfg => { }, typeof(EmployeeProfile).Assembly);
         
         return services;
     }

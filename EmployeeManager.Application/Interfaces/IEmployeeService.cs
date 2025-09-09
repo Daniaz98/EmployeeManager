@@ -15,4 +15,6 @@ public interface IEmployeeService
     Task<Stream> DownloadPhotoAsync(string employeeId);
     Task DeleteEmployeeAsync(string? id);
     Task<List<DepartmentDto>> GetDepartmentsAsync();
+    Task<EmployeeSearchResultDto> SearchEmployeesAsync(SearchEmployeesDto searchDto, CancellationToken cancellationToken = default);
+
 }

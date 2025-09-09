@@ -9,14 +9,15 @@ public class Employee
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
-    [Required]
+    [BsonElement("Name")]
     public string Name { get; private set; } = null!;
-    [Required]
-    [EmailAddress]
+    [BsonElement("Email")]
     public string Email { get; private set; }  = null!;
     [BsonRepresentation(BsonType.ObjectId)]
     public string? PhotoId { get; set; }
+    [BsonElement("Address")]
     public string Address { get; set; }  = null!;
+    [BsonElement("Department")]
     public string Department { get; set; } = null!;
 
     public Employee() { }
