@@ -14,4 +14,7 @@ public interface IEmployeeService
     Task UploadEmployeePhotoAsync(string employeeId, IFormFile file);
     Task<Stream> DownloadPhotoAsync(string employeeId);
     Task DeleteEmployeeAsync(string? id);
+    Task<List<DepartmentDto>> GetDepartmentsAsync();
+    Task<EmployeeSearchResultDto> SearchEmployeesAsync(SearchEmployeesDto searchDto, CancellationToken cancellationToken = default);
+
 }

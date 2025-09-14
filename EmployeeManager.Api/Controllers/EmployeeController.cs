@@ -8,7 +8,7 @@ namespace EmployeeManager.Api.Controllers;
 
 [ApiController]
 [Route("employee")]
-[Authorize]
+// [Authorize]
 public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _service;
@@ -33,7 +33,6 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
-    //[Authorize(Roles = "supervisor")]
     public async Task<ActionResult> Create([FromForm] CreateEmployeeDto dto)
     {
         await _service.CreateEmployeeAsync(dto);
@@ -41,7 +40,6 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "supervisor")]
     public async Task<IActionResult> Update(string id, [FromForm] UpdateEmployeeDto dto)
     {
         await _service.UpdateEmployeeAsync(id, dto);
@@ -49,7 +47,6 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    //[Authorize(Roles = "supervisor")]
     public async Task<IActionResult> Delete(string? id)
     {
         await _service.DeleteEmployeeAsync(id);

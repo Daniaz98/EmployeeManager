@@ -1,6 +1,10 @@
+using EmployeeManager.Application.DTO;
+using EmployeeManager.Domain;
 using EmployeeManager.Domain.Entities;
+using EmployeeManager.Domain.ValueObjects;
 using EmployeeManager.Infra.Context;
 using EmployeeManager.Infra.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace EmployeeManager.Infra.Repositories;
@@ -38,4 +42,32 @@ public class EmployeeRepository : IEmployeeRepository
     {
         await _collection.DeleteOneAsync(d => d.Id == id);
     }
+    
+    public async Task<SearchResult<Employee>> SearchAsync(
+        ISpecification<Employee> specification, 
+        SearchCriteria criteria, 
+        CancellationToken cancellationToken = default)
+    {
+        if (specification == null)
+            throw new ArgumentNullException(nameof(specification));
+
+        if (criteria == null)
+            throw new ArgumentNullException(nameof(criteria));
+
+        var expression = specification.ToExpression();
+        var filter = Builders<Employee>.Filter.Where(expression);
+
+        var totalCount = await _collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
+        
+        var skip = (criteria.Page - 1) * criteria.PageSize;
+            
+        var employees = await _collection
+            .Find(filter)
+            .Skip(skip)
+            .Limit(criteria.PageSize)
+            .ToListAsync(cancellationToken);
+
+        return new SearchResult<Employee>(employees, (int)totalCount, criteria.Page, criteria.PageSize);
+    }
+    
 }
