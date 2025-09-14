@@ -10,15 +10,11 @@ namespace EmployeeManager.Domain.Specifications
 
         public EmployeeSearchSpecification(string searchTerm = null)
         {
-            
             _searchTerm = string.IsNullOrWhiteSpace(searchTerm) ? null : searchTerm.ToLower().Trim();
-            
         }
 
         public Expression<Func<Employee, bool>> ToExpression()
         {
-            Console.WriteLine($"[DEBUG] ToExpression - _searchTerm: '{_searchTerm}'");
-            
             try
             {
                 if (string.IsNullOrWhiteSpace(_searchTerm))
